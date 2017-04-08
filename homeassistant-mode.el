@@ -75,3 +75,6 @@
   (interactive)
   (mje/helm-homeassistant-get-states)
   (helm :sources '(mje/helm-source-homeassistant)))
+
+(provide 'helm-homeassistant)
+
