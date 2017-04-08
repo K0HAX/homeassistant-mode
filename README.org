@@ -1,0 +1,14 @@
+* Introduction
+This Emacs script is intended to be used with [[https://github.com/home-assistant/home-assistant]].
+Once set up, you will be able to control your home automation system from within emacs!
+* Set-up
+You will have to tell your emacs where your home-assistant server is listening.
+#+BEGIN_SRC emacs-lisp
+(setq mje/homeassistant-url "http://example.com:8123")
+#+END_SRC
+
+You will also likely want to set up a keyboard shortcut.
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-c s h") 'helm-homeassistant)
+#+END_SRC

@@ -71,8 +71,7 @@
     (candidates-process . mje/helm-homeassistant-search)
     (action-transformer . mje/helm-homeassistant-actions)))
 
-(progn
+(defun helm-homeassistant ()
   (interactive)
   (mje/helm-homeassistant-get-states)
   (helm :sources '(mje/helm-source-homeassistant)))
-
