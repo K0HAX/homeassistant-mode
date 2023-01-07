@@ -105,6 +105,10 @@
     (candidates . mje/helm-homeassistant-search)
     (action-transformer . mje/helm-homeassistant-actions)))
 
+(defun helm-homeassistant-init ()
+  (interactive)
+  (mje/helm-homeassistant-get-states))
+
 (defun helm-homeassistant ()
   (interactive)
   (mje/helm-homeassistant-get-states)
