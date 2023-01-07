@@ -1,3 +1,7 @@
+(defgroup homeassistant-helm nil
+  "Home Assistant control for Helm"
+  :group 'local)
+
 (defcustom mje/homeassistant-url nil
            "The URL to Home Assistant"
            :group 'homeassistant-helm
@@ -5,6 +9,7 @@
 
 (defcustom mje/homeassistant-api-token nil
            "Home Assistant API Bearer Token"
+           :group 'homeassistant-helm
            :type 'string)
 
 (defun mje/helm-homeassistant-format-data (data)
