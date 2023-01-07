@@ -48,7 +48,7 @@
      :error
      (cl-function (lambda (&key error-thrown &allow-other-keys)
 		  (message "Got error: %S" error-thrown)))
-     :headers '(("Content-Type" . "application/json")("Bearer" . mje/homeassistant-api-token))))))
+     :headers '(("Content-Type" . "application/json")("Bearer" . mje/homeassistant-api-token)))))))
 
 (defun mje/helm-homeassistant-turn-off (device)
   (request
