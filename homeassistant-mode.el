@@ -1,5 +1,11 @@
-(defvar mje/homeassistant-url
-  "")
+(defcustom mje/homeassistant-url nil
+           "The URL to Home Assistant"
+           :group 'homeassistant-helm
+           :type 'string)
+
+(defcustom mje/homeassistant-api-token nil
+           "Home Assistant API Bearer Token"
+           :type 'string)
 
 (defun mje/helm-homeassistant-format-data (data)
   (let ((tmp-data data))
@@ -11,7 +17,8 @@
    :parser 'json-read
    :success (cl-function
 	     (lambda (&key data &allow-other-keys)
-	       (mje/helm-homeassistant-format-data data)))))
+	       (mje/helm-homeassistant-format-data data)))
+   :headers '(("Content-Type" . "application/json")("Bearer" . mje/homeassistant-api-token))))
 
 (defun mje/helm-homeassistant-turn-on (device)
   (cond
@@ -23,7 +30,7 @@
      :error
      (cl-function (lambda (&key error-thrown &allow-other-keys)
 		  (message "Got error: %S" error-thrown)))
-     :headers '(("Content-Type" . "application/json"))))
+     :headers '(("Content-Type" . "application/json")("Bearer" . mje/homeassistant-api-token)))
    ((string-match "^light\." (cdr (assoc 'entity_id device)))
     (request
      (format "%s/api/services/light/turn_on" mje/homeassistant-url)
@@ -32,7 +39,7 @@
      :error
      (cl-function (lambda (&key error-thrown &allow-other-keys)
 		  (message "Got error: %S" error-thrown)))
-     :headers '(("Content-Type" . "application/json"))))
+     :headers '(("Content-Type" . "application/json")("Bearer" . mje/homeassistant-api-token))))
    ((string-match "^group\." (cdr (assoc 'entity_id device)))
     (request
      (format "%s/api/services/light/turn_on" mje/homeassistant-url)
@@ -41,7 +48,7 @@
      :error
      (cl-function (lambda (&key error-thrown &allow-other-keys)
 		  (message "Got error: %S" error-thrown)))
-     :headers '(("Content-Type" . "application/json"))))))
+     :headers '(("Content-Type" . "application/json")("Bearer" . mje/homeassistant-api-token))))))
 
 (defun mje/helm-homeassistant-turn-off (device)
   (request
@@ -51,7 +58,7 @@
    :error
    (cl-function (lambda (&key error-thrown &allow-other-keys)
 		(message "Got error: %S" error-thrown)))
-   :headers '(("Content-Type" . "application/json"))))
+   :headers '(("Content-Type" . "application/json")("Bearer" . mje/homeassistant-api-token))))
 
 (defun mje/helm-format-homeassistant-for-display (device)
   (cdr (assoc 'friendly_name (assoc 'attributes device))))
