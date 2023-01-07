@@ -12,9 +12,11 @@
            :group 'homeassistant-helm
            :type 'string)
 
+(defvar mje/sample-results)
+
 (defun mje/helm-homeassistant-format-data (data)
   (let ((tmp-data data))
-    (setq sample-results tmp-data)))
+    (setq mje/sample-results tmp-data)))
 
 (defun mje/helm-homeassistant-get-states ()
   (request
@@ -35,7 +37,7 @@
      :error
      (cl-function (lambda (&key error-thrown &allow-other-keys)
 		  (message "Got error: %S" error-thrown)))
-     :headers '(("Content-Type" . "application/json")("Authorization" . (format "Bearer %s" mje/homeassistant-api-token))))
+     :headers '(("Content-Type" . "application/json")("Authorization" . (format "Bearer %s" mje/homeassistant-api-token)))))
    ((string-match "^light\." (cdr (assoc 'entity_id device)))
     (request
      (format "%s/api/services/light/turn_on" mje/homeassistant-url)
@@ -44,7 +46,7 @@
      :error
      (cl-function (lambda (&key error-thrown &allow-other-keys)
 		  (message "Got error: %S" error-thrown)))
-     :headers '(("Content-Type" . "application/json")("Authorization" . (format "Bearer %s" mje/homeassistant-api-token))))
+     :headers '(("Content-Type" . "application/json")("Authorization" . (format "Bearer %s" mje/homeassistant-api-token)))))
    ((string-match "^group\." (cdr (assoc 'entity_id device)))
     (request
      (format "%s/api/services/light/turn_on" mje/homeassistant-url)
@@ -53,7 +55,7 @@
      :error
      (cl-function (lambda (&key error-thrown &allow-other-keys)
 		  (message "Got error: %S" error-thrown)))
-     :headers '(("Content-Type" . "application/json")("Authorization" . (format "Bearer %s" mje/homeassistant-api-token)))))))))
+     :headers '(("Content-Type" . "application/json")("Authorization" . (format "Bearer %s" mje/homeassistant-api-token)))))))
 
 (defun mje/helm-homeassistant-turn-off (device)
   (request
@@ -72,7 +74,7 @@
   (mapcar (lambda (device)
 	    (cons (mje/helm-format-homeassistant-for-display device)
 		  device))
-	  sample-results))
+	  mje/sample-results))
 
 (defun mje/helm-homeassistant-actions (actions device)
   `((,(format "Turn on")  . mje/helm-homeassistant-turn-on)
