@@ -9,7 +9,7 @@
   (request
    (format "%s/api/states" mje/homeassistant-url)
    :parser 'json-read
-   :success (function*
+   :success (cl-function
 	     (lambda (&key data &allow-other-keys)
 	       (mje/helm-homeassistant-format-data data)))))
 
@@ -21,7 +21,7 @@
      :type "POST"
      :data (json-encode `(("entity_id" . ,(cdr (assoc 'entity_id device)))))
      :error
-     (function* (lambda (&key error-thrown &allow-other-keys)
+     (cl-function (lambda (&key error-thrown &allow-other-keys)
 		  (message "Got error: %S" error-thrown)))
      :headers '(("Content-Type" . "application/json"))))
    ((string-match "^light\." (cdr (assoc 'entity_id device)))
@@ -30,7 +30,7 @@
      :type "POST"
      :data (json-encode `(("entity_id" . ,(cdr (assoc 'entity_id device)))))
      :error
-     (function* (lambda (&key error-thrown &allow-other-keys)
+     (cl-function (lambda (&key error-thrown &allow-other-keys)
 		  (message "Got error: %S" error-thrown)))
      :headers '(("Content-Type" . "application/json"))))
    ((string-match "^group\." (cdr (assoc 'entity_id device)))
@@ -39,7 +39,7 @@
      :type "POST"
      :data (json-encode `(("entity_id" . ,(cdr (assoc 'entity_id device)))))
      :error
-     (function* (lambda (&key error-thrown &allow-other-keys)
+     (cl-function (lambda (&key error-thrown &allow-other-keys)
 		  (message "Got error: %S" error-thrown)))
      :headers '(("Content-Type" . "application/json"))))))
 
@@ -49,7 +49,7 @@
    :type "POST"
    :data (json-encode `(("entity_id" . ,(cdr (assoc 'entity_id device)))))
    :error
-   (function* (lambda (&key error-thrown &allow-other-keys)
+   (cl-function (lambda (&key error-thrown &allow-other-keys)
 		(message "Got error: %S" error-thrown)))
    :headers '(("Content-Type" . "application/json"))))
 
